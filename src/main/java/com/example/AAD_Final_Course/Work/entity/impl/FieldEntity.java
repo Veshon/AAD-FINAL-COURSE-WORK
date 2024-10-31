@@ -25,7 +25,7 @@ public class FieldEntity implements SuperEntity {
     @OneToMany(mappedBy = "field")
     private List<CropsEntity> crops;
 
-    @OneToMany(mappedBy = "field")
+    @ManyToMany
     private List<StaffEntity> staff;
 
     @Column(columnDefinition = "LONGTEXT")
