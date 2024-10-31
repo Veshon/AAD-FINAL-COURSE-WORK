@@ -4,10 +4,7 @@ import com.example.AAD_Final_Course.Work.entity.Desig;
 import com.example.AAD_Final_Course.Work.entity.Gender;
 import com.example.AAD_Final_Course.Work.entity.Role;
 import com.example.AAD_Final_Course.Work.entity.SuperEntity;
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -39,7 +36,7 @@ public class StaffEntity implements SuperEntity {
     private String email;
     private Role role;
     private String field;
-    @OneToOne(mappedBy = "staff")
-    private List<VehicleEntity1> vehicle;
+    @ManyToMany
+    private List<VehicleEntity> vehicle;
 
 }
