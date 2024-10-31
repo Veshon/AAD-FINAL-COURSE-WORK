@@ -18,4 +18,5 @@ public class VehicleEntity implements SuperEntity {
 
     @Id
     private String id;
+    private String licensePlateNo;
 }
