@@ -1,7 +1,7 @@
 package com.example.AAD_Final_Course_Work.customStatusCode;
 
-import com.example.demo.dto.CropStatus;
-import com.example.demo.dto.FieldStatus;
+import com.example.AAD_Final_Course_Work.dto.CropStatus;
+import com.example.AAD_Final_Course_Work.dto.FieldStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
