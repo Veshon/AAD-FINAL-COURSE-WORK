@@ -19,24 +19,38 @@ import java.util.List;
 @Table(name = "Staff")
 
 public class StaffEntity implements SuperEntity {
+
     @Id
-    private String Id;
+    private String id;
     private String firstName;
     private String lastName;
+
+    @Enumerated(EnumType.STRING)
     private Desig designation;
+
+    @Enumerated(EnumType.STRING)
     private Gender gender;
-    private String joinedDate;
-    private String DOB;
-    private String addressLine1;
-    private String addressLine2;
-    private String addressLine3;
-    private String addressLine4;
-    private String addressLine5;
+    private Date joinedDate;
+    private Date dob;
+
+    private String addressLine01;
+    private String addressLine02;
+    private String addressLine03;
+    private String addressLine04;
+    private String addressLine05;
     private String contactNo;
     private String email;
+
+    @Enumerated(EnumType.STRING)
     private Role role;
-    private String field;
+
+    @ManyToMany(mappedBy = "staff")
+    private List<FieldEntity> fields;
+
     @ManyToMany
-    private List<VehicleEntity> vehicle;
+    private List<VehicleEntity> vehicles;
+
+    @OneToMany(mappedBy = "staff")
+    private List<EquipmentEntity> equipment;
 
 }

@@ -17,20 +17,17 @@ import java.util.List;
 public class FieldEntity implements SuperEntity {
 
     @Id
-    private String fieldCode;
-    private String fieldName;
-    private String fieldLocation;
-    private double extentSizeOfField;
+    private String cropCode;
+    private String cropCommonName;
+    private String cropScientificName;
 
-    @OneToMany(mappedBy = "field")
-    private List<CropsEntity> crops;
+    @Lob
+    private String cropImage;
+    private String category;
+    private String cropSeason;
 
-    @ManyToMany
-    private List<StaffEntity> staff;
-
-    @Column(columnDefinition = "LONGTEXT")
-    private String fieldImg1;
-    @Column(columnDefinition = "LONGTEXT")
-    private String fieldImg2;
+    @ManyToOne
+    @JoinColumn(name = "field_code")
+    private FieldEntity field;
 
 }
