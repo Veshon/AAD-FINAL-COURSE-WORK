@@ -9,5 +9,6 @@ public interface FieldService {
     void saveField(FieldDTO buildFieldDTO);
     List<FieldDTO> getAllFields();
     FieldStatus getField(String fieldCode);
+    void deleteField(String fieldCode);
 
 }

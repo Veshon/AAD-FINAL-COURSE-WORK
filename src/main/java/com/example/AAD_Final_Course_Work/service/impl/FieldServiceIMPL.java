@@ -6,6 +6,7 @@ import com.example.AAD_Final_Course_Work.dto.FieldStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.FieldDTO;
 import com.example.AAD_Final_Course_Work.entity.impl.FieldEntity;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
+import com.example.AAD_Final_Course_Work.exception.FieldNotFoundException;
 import com.example.AAD_Final_Course_Work.service.FieldService;
 import com.example.AAD_Final_Course_Work.util.Mapping;
 import jakarta.transaction.Transactional;
@@ -47,5 +48,16 @@ public class FieldServiceIMPL implements FieldService {
             return mapping.toFieldDTO(selectedField);
         }
         return new SelectedErrorStatus(2, "Field with code " + fieldCode + " not found");
+    }
+
+    @Override
+    public void deleteField(String fieldCode) {
+        Optional<FieldEntity> existedField = fieldDAO.findById(fieldCode);
+
+        if (!existedField.isPresent()){
+            throw new FieldNotFoundException("Field code" + fieldCode + "Not found");
+        }else {
+            fieldDAO.deleteById(fieldCode);
+        }
     }
 }
