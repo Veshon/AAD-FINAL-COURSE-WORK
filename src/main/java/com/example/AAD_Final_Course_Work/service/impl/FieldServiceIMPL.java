@@ -10,6 +10,7 @@ import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -29,5 +30,11 @@ public class FieldServiceIMPL implements FieldService {
         if (savedField == null) {
             throw new DataPersistException("Field not saved");
         }
+    }
+
+    @Override
+    public List<FieldDTO> getAllFields() {
+        List<FieldEntity> allFields = fieldDAO.findAll();
+        return mapping.asFieldDTOList(allFields);
     }
 }
