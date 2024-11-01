@@ -1,5 +1,7 @@
 package com.example.AAD_Final_Course_Work.controller;
 
+import com.example.AAD_Final_Course_Work.customStatusCode.SelectedFieldErrorStatus;
+import com.example.AAD_Final_Course_Work.dto.FieldStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.FieldDTO;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
 import com.example.AAD_Final_Course_Work.service.FieldService;
@@ -12,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/fields")
@@ -60,5 +63,18 @@ public class FieldController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<FieldDTO> getAllFields(){
         return fieldService.getAllFields();
+    }
+
+    @GetMapping(value = "/{fieldCode}", produces = MediaType.APPLICATION_JSON_VALUE)
+    public FieldStatus getSelectedField(@PathVariable ("fieldCode") String fieldCode){
+
+        String regexForUserId = "^FIELD-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserId);
+        var regexMatcher = regexPattern.matcher(fieldCode);
+
+        if (!regexMatcher.matches()){
+            return new SelectedFieldErrorStatus(1,"Field code is not valid");
+        }
+        return fieldService.getField(fieldCode);
     }
 }

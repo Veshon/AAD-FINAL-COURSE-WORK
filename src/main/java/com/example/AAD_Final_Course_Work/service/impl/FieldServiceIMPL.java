@@ -1,6 +1,8 @@
 package com.example.AAD_Final_Course_Work.service.impl;
 
+import com.example.AAD_Final_Course_Work.customStatusCode.SelectedErrorStatus;
 import com.example.AAD_Final_Course_Work.dao.FieldDAO;
+import com.example.AAD_Final_Course_Work.dto.FieldStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.FieldDTO;
 import com.example.AAD_Final_Course_Work.entity.impl.FieldEntity;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
@@ -36,5 +38,14 @@ public class FieldServiceIMPL implements FieldService {
     public List<FieldDTO> getAllFields() {
         List<FieldEntity> allFields = fieldDAO.findAll();
         return mapping.asFieldDTOList(allFields);
+    }
+
+    @Override
+    public FieldStatus getField(String fieldCode) {
+        if (fieldDAO.existsById(fieldCode)){
+            FieldEntity selectedField = fieldDAO.getReferenceById(fieldCode);
+            return mapping.toFieldDTO(selectedField);
+        }
+        return new SelectedErrorStatus(2, "Field with code " + fieldCode + " not found");
     }
 }
