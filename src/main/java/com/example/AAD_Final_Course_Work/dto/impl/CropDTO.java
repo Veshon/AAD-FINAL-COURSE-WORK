@@ -1,5 +1,6 @@
 package com.example.AAD_Final_Course_Work.dto.impl;
 
+import com.example.AAD_Final_Course_Work.dto.CropStatus;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -8,14 +9,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Data
 
-public class CropDTO {
+public class CropDTO implements CropStatus {
 
-    private String cropCode;
-    private String cropCommonName;
-    private String cropScientificName;
-    private String cropImage;
+    private String code;
+    private String commonName;
+    private String scientificName;
+    private String cropImg;
     private String category;
-    private String cropSeason;
+    private String season;
     private String fieldCode;
 
 }

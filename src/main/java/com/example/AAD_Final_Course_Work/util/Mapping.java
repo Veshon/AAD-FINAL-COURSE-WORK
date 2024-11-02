@@ -1,6 +1,8 @@
 package com.example.AAD_Final_Course_Work.util;
 
+import com.example.AAD_Final_Course_Work.dto.impl.CropDTO;
 import com.example.AAD_Final_Course_Work.dto.impl.FieldDTO;
+import com.example.AAD_Final_Course_Work.entity.impl.CropEntity;
 import com.example.AAD_Final_Course_Work.entity.impl.FieldEntity;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeToken;
@@ -29,15 +31,15 @@ public class Mapping {
         return modelMapper.map(fieldEntities, new TypeToken<List<FieldDTO>>() {}.getType());
     }
 
-//    public NoteDTO toNoteDTO(NoteEntity noteEntity) {
-//        return modelMapper.map(noteEntity, NoteDTO.class);
-//    }
-//
-//    public NoteEntity toNoteEntity(NoteDTO noteDTO) {
-//        return modelMapper.map(noteDTO, NoteEntity.class);
-//    }
-//
-//    public List<NoteDTO> asNoteDTOList(List<NoteEntity> noteEntities) {
-//        return modelMapper.map(noteEntities, new TypeToken<List<NoteDTO>>() {}.getType());
-//    }
+    public CropDTO toCropDTO(CropEntity cropEntity) {
+        return modelMapper.map(cropEntity, CropDTO.class);
+    }
+
+    public CropEntity toCropEntity(CropDTO cropDTO) {
+        return modelMapper.map(cropDTO, CropEntity.class);
+    }
+
+    public List<CropDTO> asCropDTOList(List<CropEntity> cropEntities) {
+        return modelMapper.map(cropEntities, new TypeToken<List<CropDTO>>() {}.getType());
+    }
 }
