@@ -1,6 +1,8 @@
 package com.example.AAD_Final_Course_Work.service.impl;
 
+import com.example.AAD_Final_Course_Work.customStatusCode.SelectedErrorStatus;
 import com.example.AAD_Final_Course_Work.dao.StaffDAO;
+import com.example.AAD_Final_Course_Work.dto.StaffStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.StaffDTO;
 import com.example.AAD_Final_Course_Work.entity.impl.StaffEntity;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
@@ -40,5 +42,14 @@ public class StaffServiceIMPL implements StaffService {
     public List<StaffDTO> getAllStaff() {
         List<StaffEntity> allStaff = staffDAO.findAll();
         return mapping.asStaffDTOList(allStaff);
+    }
+
+    @Override
+    public StaffStatus getStaff(String id) {
+        if (staffDAO.existsById(id)){
+            StaffEntity selectedStaff = staffDAO.getReferenceById(id);
+            return mapping.toStaffDTO(selectedStaff);
+        }
+        return (StaffStatus) new SelectedErrorStatus(2, "Staff with code " + id + " not found");
     }
 }

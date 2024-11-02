@@ -1,5 +1,7 @@
 package com.example.AAD_Final_Course_Work.controller;
 
+import com.example.AAD_Final_Course_Work.customStatusCode.SelectedErrorStatus;
+import com.example.AAD_Final_Course_Work.dto.StaffStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.StaffDTO;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
 import com.example.AAD_Final_Course_Work.service.StaffService;
@@ -10,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.regex.Pattern;
 
 @RestController
 @RequestMapping("api/v1/staff")
@@ -37,5 +40,16 @@ public class StaffController {
     @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
     public List<StaffDTO> getAllStaff(){
         return staffService.getAllStaff();
+    }
+
+    @GetMapping(value = "/{id}",produces = MediaType.APPLICATION_JSON_VALUE)
+    public StaffStatus getSelectedStaff(@PathVariable ("id") String id){
+        String regexForUserID = "^STAFF-[a-fA-F0-9]{8}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{4}-[a-fA-F0-9]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserID);
+        var regexMatcher = regexPattern.matcher(id);
+        if (!regexMatcher.matches()) {
+            return (StaffStatus) new SelectedErrorStatus(1,"Staff ID is not valid");
+        }
+        return staffService.getStaff(id);
     }
 }
