@@ -4,6 +4,7 @@ import com.example.AAD_Final_Course_Work.customStatusCode.SelectedErrorStatus;
 import com.example.AAD_Final_Course_Work.dto.CropStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.CropDTO;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
+import com.example.AAD_Final_Course_Work.exception.FieldNotFoundException;
 import com.example.AAD_Final_Course_Work.service.CropService;
 import com.example.AAD_Final_Course_Work.util.AppUtil;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,5 +74,31 @@ public class CropController {
             return new SelectedErrorStatus(1,"Crop ID is not ");
         }
         return cropService.getCrop(code);
+    }
+
+    @DeleteMapping(value = "/{code}")
+    public ResponseEntity<Void> deleteCode(@PathVariable("code") String code){
+
+        String regexForUserId = "^CROP-[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$";
+        Pattern regexPattern = Pattern.compile(regexForUserId);
+        var regexMatcher = regexPattern.matcher(code);
+
+        try {
+
+            if (!regexMatcher.matches()){
+                return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+            }
+
+            cropService.deleteCrop(code);
+            return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+
+        }catch (FieldNotFoundException e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }catch (Exception e){
+            e.printStackTrace();
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+
+        }
     }
 }

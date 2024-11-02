@@ -6,6 +6,7 @@ import com.example.AAD_Final_Course_Work.dto.CropStatus;
 import com.example.AAD_Final_Course_Work.dto.impl.CropDTO;
 import com.example.AAD_Final_Course_Work.entity.impl.CropEntity;
 import com.example.AAD_Final_Course_Work.exception.DataPersistException;
+import com.example.AAD_Final_Course_Work.exception.FieldNotFoundException;
 import com.example.AAD_Final_Course_Work.service.CropService;
 import com.example.AAD_Final_Course_Work.util.AppUtil;
 import com.example.AAD_Final_Course_Work.util.Mapping;
@@ -14,6 +15,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @Transactional
@@ -50,5 +52,16 @@ public class CropServiceIMPL implements CropService {
             return mapping.toCropDTO(selectedCrop);
         }
         return new SelectedErrorStatus(2, "Crop with code " + code + " not found");
+    }
+
+    @Override
+    public void deleteCrop(String code) {
+        Optional<CropEntity> existedCrop = cropDAO.findById(code);
+
+        if (!existedCrop.isPresent()){
+            throw new FieldNotFoundException("Crop code" + code + "Not found");
+        }else {
+            cropDAO.deleteById(code);
+        }
     }
 }
